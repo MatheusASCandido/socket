@@ -23,6 +23,58 @@ void func(int sockfd)
                 //novo usuario
                 strcat(buff,"1");
                 strcat(buff,":");
+                printf(" %s \n", buff);
+
+                char variavel[100];
+                char str[100];
+                printf("Digite o Email do usuário: ");
+                scanf("%s",variavel);
+                strcat(buff,variavel);
+                strcat(buff,",");
+                printf(" %s \n", buff);
+
+                printf("Digite o Nome do usuário: ");
+                scanf("%s",variavel);
+                strcat(buff,variavel);
+                strcat(buff,",");
+                printf(" %s \n", buff);
+
+
+                printf("Digite o Sobrenome do usuário: ");
+                scanf("%s",variavel);
+                strcat(buff,variavel);
+                strcat(buff,",");
+                printf(" %s \n", buff);
+
+                printf("Digite a Residência do usuário: ");
+                scanf("%s",variavel);
+                strcat(buff,variavel);
+                strcat(buff,",");
+                printf(" %s \n", buff);
+
+                printf("Digite a Formação Acadêmica do usuário: ");
+                char aux[100];
+                fgets(aux, 100, stdin);
+                fgets(str, 100, stdin);
+                str[strcspn(str, "\n")] = 0;
+                strcat(buff,str);
+                strcat(buff,",");
+                printf(" %s \n", buff);
+
+                printf("Digite o Ano de Formação do usuário: ");
+                scanf("%s",variavel);
+                strcat(buff,variavel);
+                strcat(buff,",");
+                printf(" %s \n", buff);
+
+                printf("Digite as Habilidades do usuário: ");
+                //scanf("%[%s^\n]",&variavel);
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                strcat(buff,str);
+                printf(" %s \n", buff);
+                //printf("%s", str);
+
                 //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
                 //pedir as habilidades separadas por ";" por conta do csv
                 write(sockfd,buff, sizeof(buff));
@@ -31,13 +83,27 @@ void func(int sockfd)
                 // determinado curso
                 strcat(buff,"2");
                 strcat(buff,":");
+
+                printf("Digite a Formação Acadêmica do usuário: ");
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                printf("\n");
+                strcat(buff,str);
+
                 //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
                 write(sockfd,buff, sizeof(buff));
                 break;
-            case 3:
+            case 3: ;
                 //habilidade
                 strcat(buff,"3");
                 strcat(buff,":");
+
+                printf("Digite a Habilidade do usuário: ");
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                printf("\n");
+                strcat(buff,str);
+
                 //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
                 write(sockfd,buff, sizeof(buff));
                 break;
@@ -45,6 +111,13 @@ void func(int sockfd)
                 //ano
                 strcat(buff,"4");
                 strcat(buff,":");
+
+                printf("Digite o ano de formação do usuário: ");
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                printf("\n");
+                strcat(buff,str);
+
                 //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
                 write(sockfd,buff, sizeof(buff));
                 break;
@@ -59,12 +132,27 @@ void func(int sockfd)
                 //via email
                 strcat(buff,"6");
                 strcat(buff,":");
+
+
+                printf("Digite o Email do usuário: ");
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                printf("\n");
+                strcat(buff,str);
+
                 //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
                 write(sockfd,buff, sizeof(buff));
                 break;
             case 7:
                 strcat(buff,"7");
                 strcat(buff,":");
+
+                printf("Digite o Email do usuário: ");
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                printf("\n");
+                strcat(buff,str);
+
                 //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
                 write(sockfd,buff, sizeof(buff));
                 break;
