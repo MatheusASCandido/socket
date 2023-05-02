@@ -11,12 +11,176 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-
+#include <strings.h> // bzero()
 #include <arpa/inet.h>
 
 #define PORT "3490" // the port client will be connecting to 
-
+#define MAX 4000
 #define MAXDATASIZE 100 // max number of bytes we can get at once 
+
+void func(int sockfd)
+{
+    char buff[MAX];
+    int n;
+    int opcao=0;
+    for (;;) {
+        bzero(buff, sizeof(buff));
+        printf("\nEscolha a opção desejada : \n1-Cadastrar novo perfil\n2-Listar as pessoas formadas em um determinado curso\n3-Listar as pessoas com determinada habilidade\n4-Listar pessoas formadas em determinado ano\n5-Listar todos os perfis\n6-Consultar perfil via email\n7-Remover perfil\n8-Sair\n");
+        scanf("%d",&opcao);
+        switch(opcao){
+            case 1:
+                //novo usuario
+                strcat(buff,"1");
+                strcat(buff,":");
+                printf(" %s \n", buff);
+
+                char variavel[100];
+                char str[100];
+                printf("Digite o Email do usuário: ");
+                scanf("%s",variavel);
+                strcat(buff,variavel);
+                strcat(buff,",");
+                //printf(" %s \n", buff);
+
+                printf("Digite o Nome do usuário: ");
+                scanf("%s",variavel);
+                strcat(buff,variavel);
+                strcat(buff,",");
+                //printf(" %s \n", buff);
+
+
+                printf("Digite o Sobrenome do usuário: ");
+                scanf("%s",variavel);
+                strcat(buff,variavel);
+                strcat(buff,",");
+                //printf(" %s \n", buff);
+
+                printf("Digite a Residência do usuário: ");
+                scanf("%s",variavel);
+                strcat(buff,variavel);
+                strcat(buff,",");
+                //printf(" %s \n", buff);
+
+                printf("Digite a Formação Acadêmica do usuário: ");
+                char aux[100];
+                fgets(aux, 100, stdin);
+                fgets(str, 100, stdin);
+                str[strcspn(str, "\n")] = 0;
+                strcat(buff,str);
+                strcat(buff,",");
+                //printf(" %s \n", buff);
+
+                printf("Digite o Ano de Formação do usuário: ");
+                scanf("%s",variavel);
+                strcat(buff,variavel);
+                strcat(buff,",");
+                //printf(" %s \n", buff);
+
+                printf("Digite as Habilidades do usuário: ");
+                //scanf("%[%s^\n]",&variavel);
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                strcat(buff,str);
+                //printf(" %s \n", buff);
+                //printf("%s", str);
+
+                //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
+                //pedir as habilidades separadas por ";" por conta do csv
+                write(sockfd,buff, sizeof(buff));
+                break;
+            case 2: 
+                // determinado curso
+                strcat(buff,"2");
+                strcat(buff,":");
+
+                printf("Digite a Formação Acadêmica do usuário: ");
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                printf("\n");
+                strcat(buff,str);
+
+                //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
+                write(sockfd,buff, sizeof(buff));
+                break;
+            case 3: ;
+                //habilidade
+                strcat(buff,"3");
+                strcat(buff,":");
+
+                printf("Digite a Habilidade do usuário: ");
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                printf("\n");
+                strcat(buff,str);
+
+                //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
+                write(sockfd,buff, sizeof(buff));
+                break;
+            case 4: 
+                //ano
+                strcat(buff,"4");
+                strcat(buff,":");
+
+                printf("Digite o ano de formação do usuário: ");
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                printf("\n");
+                strcat(buff,str);
+
+                //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
+                write(sockfd,buff, sizeof(buff));
+                break;
+            case 5:
+                //todos
+                strcat(buff,"5");
+                strcat(buff,":");
+                //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
+                write(sockfd,buff, sizeof(buff));
+                break;
+            case 6:
+                //via email
+                strcat(buff,"6");
+                strcat(buff,":");
+
+
+                printf("Digite o Email do usuário: ");
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                printf("\n");
+                strcat(buff,str);
+
+                //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
+                write(sockfd,buff, sizeof(buff));
+                break;
+            case 7:
+                strcat(buff,"7");
+                strcat(buff,":");
+
+                printf("Digite o Email do usuário: ");
+                fgets(str, 100, stdin);
+                fgets(str, 100, stdin);
+                printf("\n");
+                strcat(buff,str);
+
+                //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
+                write(sockfd,buff, sizeof(buff));
+                break;
+            case 8:
+                write(sockfd, "exit", 5);
+                break;
+            
+        }
+        bzero(buff, sizeof(buff));
+        read(sockfd, buff, sizeof(buff));
+        printf("From Server : %s\n", buff);
+        if ((strncmp(buff, "exit", 4)) == 0) {
+            printf("Client Exit...\n");
+            break;
+       }
+        }
+        
+        
+}
 
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
@@ -78,14 +242,8 @@ int main(int argc, char *argv[])
 
 	freeaddrinfo(servinfo); // all done with this structure
 
-	if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1) {
-	    perror("recv");
-	    exit(1);
-	}
-
-	buf[numbytes] = '\0';
-
-	printf("client: received '%s'\n",buf);
+	// function for chat
+    func(sockfd);
 
 	close(sockfd);
 
