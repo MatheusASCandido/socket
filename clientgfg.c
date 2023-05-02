@@ -23,7 +23,7 @@ void func(int sockfd)
                 //novo usuario
                 strcat(buff,"1");
                 strcat(buff,":");
-                printf(" %s \n", buff);
+                
 
                 char variavel[100];
                 char str[100];

@@ -18,7 +18,7 @@
 #define MAX 4000
 #define MAXDATASIZE 100 // max number of bytes we can get at once 
 
-void func(int sockfd)
+void server_client(int sockfd)
 {
     char buff[MAX];
     int n;
@@ -32,7 +32,6 @@ void func(int sockfd)
                 //novo usuario
                 strcat(buff,"1");
                 strcat(buff,":");
-                printf(" %s \n", buff);
 
                 char variavel[100];
                 char str[100];
@@ -40,26 +39,26 @@ void func(int sockfd)
                 scanf("%s",variavel);
                 strcat(buff,variavel);
                 strcat(buff,",");
-                //printf(" %s \n", buff);
+                
 
                 printf("Digite o Nome do usuário: ");
                 scanf("%s",variavel);
                 strcat(buff,variavel);
                 strcat(buff,",");
-                //printf(" %s \n", buff);
+               
 
 
                 printf("Digite o Sobrenome do usuário: ");
                 scanf("%s",variavel);
                 strcat(buff,variavel);
                 strcat(buff,",");
-                //printf(" %s \n", buff);
+              
 
                 printf("Digite a Residência do usuário: ");
                 scanf("%s",variavel);
                 strcat(buff,variavel);
                 strcat(buff,",");
-                //printf(" %s \n", buff);
+                
 
                 printf("Digite a Formação Acadêmica do usuário: ");
                 char aux[100];
@@ -68,21 +67,20 @@ void func(int sockfd)
                 str[strcspn(str, "\n")] = 0;
                 strcat(buff,str);
                 strcat(buff,",");
-                //printf(" %s \n", buff);
+               
 
                 printf("Digite o Ano de Formação do usuário: ");
                 scanf("%s",variavel);
                 strcat(buff,variavel);
                 strcat(buff,",");
-                //printf(" %s \n", buff);
+                
 
                 printf("Digite as Habilidades do usuário: ");
-                //scanf("%[%s^\n]",&variavel);
+               
                 fgets(str, 100, stdin);
                 fgets(str, 100, stdin);
                 strcat(buff,str);
-                //printf(" %s \n", buff);
-                //printf("%s", str);
+                
 
                 //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info
                 //pedir as habilidades separadas por ";" por conta do csv
@@ -243,7 +241,7 @@ int main(int argc, char *argv[])
 	freeaddrinfo(servinfo); // all done with this structure
 
 	// function for chat
-    func(sockfd);
+    server_client(sockfd);
 
 	close(sockfd);
 

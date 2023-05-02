@@ -19,31 +19,30 @@
 #define MAX 4000
 #define BACKLOG 10	 // how many pending connections queue will hold
 
-//void novo_user(char* Email,char* Nome, char* Sobrenome,char* Res, char* Form, char* Ano,char* Hab){
-void novo_user(char* Nome){ 
+
+void novo_user(char* Nome){ //função para adicionar um novo usuario ao banco de dados
     FILE* fp = fopen("database.csv", "a+");
 
     if (!fp)
         printf("Can't open file\n");
 
     else {
-        //printf("mostrando o nome:%s\n", Nome);
+        
         fprintf(fp, "%s", Nome);
         fclose(fp);
     }
 }
 
-char *determinado_curso(char* curso, char* aux){
+char *determinado_curso(char* curso, char* aux){//função para buscar usuarios formados em determinado curso
     FILE* fp = fopen("database.csv", "r");
     curso = strtok(curso, "\n");
-    //printf("entrou: %s\n", curso);
+   
 
     if (!fp)
         printf("Can't open file\n");
 
     else {
- // Here we have taken size of
-        // array 1024 you can modify it
+ 
         char buffer[1024];
   
         int row = 0;
@@ -56,9 +55,7 @@ char *determinado_curso(char* curso, char* aux){
             column = 0;
             row++;
   
-            // To avoid printing of column
-            // names in file can be changed
-            // according to need
+           
             if (row == 1)
                 continue;
   
@@ -95,17 +92,16 @@ char *determinado_curso(char* curso, char* aux){
     return (aux);
 }
 
-char *determinada_habilidade(char* habilidade, char* aux){
+char *determinada_habilidade(char* habilidade, char* aux){//função para buscar usuarios com determinada habilidade
     FILE* fp = fopen("database.csv", "r");
     habilidade = strtok(habilidade, "\n");
-    //printf("entrou: %s\n", curso);
+   
 
     if (!fp)
         printf("Can't open file\n");
 
     else {
- // Here we have taken size of
-        // array 1024 you can modify it
+ 
         char buffer[1024];
   
         int row = 0;
@@ -118,9 +114,7 @@ char *determinada_habilidade(char* habilidade, char* aux){
             column = 0;
             row++;
   
-            // To avoid printing of column
-            // names in file can be changed
-            // according to need
+            
             if (row == 1)
                 continue;
   
@@ -138,7 +132,7 @@ char *determinada_habilidade(char* habilidade, char* aux){
 
 
                 if (column == 6) {
-                    //printf("%s %s\n",value, habilidade);
+                    
                     if(strstr(value, habilidade)!=NULL){
                         printf("Email: %s; Nome: %s\n", email, nome);
                         strcat(aux,"Email: ");
@@ -158,17 +152,15 @@ char *determinada_habilidade(char* habilidade, char* aux){
     return (aux);
 }
 
-char *determinado_ano(char* ano, char* aux){
+char *determinado_ano(char* ano, char* aux){//função para encontrar usuarios formados em determinado ano
     FILE* fp = fopen("database.csv", "r");
     ano = strtok(ano, "\n");
-    //printf("entrou: %s\n", curso);
-
+   
     if (!fp)
         printf("Can't open file\n");
 
     else {
- // Here we have taken size of
-        // array 1024 you can modify it
+ 
         char buffer[1024];
   
         int row = 0;
@@ -182,9 +174,7 @@ char *determinado_ano(char* ano, char* aux){
             column = 0;
             row++;
   
-            // To avoid printing of column
-            // names in file can be changed
-            // according to need
+           
             if (row == 1)
                 continue;
   
@@ -226,15 +216,14 @@ char *determinado_ano(char* ano, char* aux){
     return(aux);
 }
 
-char *listar_todos(char* aux){
+char *listar_todos(char* aux){//função para listar todos os usuários
     FILE* fp = fopen("database.csv", "r");
 
     if (!fp)
         printf("Can't open file\n");
 
     else {
-        // Here we have taken size of
-        // array 1024 you can modify it
+        
         char buffer[1024];
   
         int row = 0;
@@ -246,9 +235,7 @@ char *listar_todos(char* aux){
             column = 0;
             row++;
   
-            // To avoid printing of column
-            // names in file can be changed
-            // according to need
+           
             if (row == 1)
                 continue;
   
@@ -302,17 +289,16 @@ char *listar_todos(char* aux){
     }
     return (aux);
 }
-char *consultar_email(char* email, char* aux){
+char *consultar_email(char* email, char* aux){//função para encontrar um usuario atraves do email
     FILE* fp = fopen("database.csv", "r");
     email = strtok(email, "\n");
-    //printf("entrou: %s\n", curso);
+    
 
     if (!fp)
         printf("Can't open file\n");
 
     else {
- // Here we have taken size of
-        // array 1024 you can modify it
+
         char buffer[1024];
   
         int row = 0;
@@ -324,13 +310,11 @@ char *consultar_email(char* email, char* aux){
             column = 0;
             row++;
   
-            // To avoid printing of column
-            // names in file can be changed
-            // according to need
+            
             if (row == 1)
                 continue;
   
-            // Splitting the data
+           
             char* value = strtok(buffer, ",");
             int correto = 0;
   
@@ -389,18 +373,17 @@ char *consultar_email(char* email, char* aux){
     return(aux);
 }
 
-int pegalinha_remove(char* email){
+int pegalinha_remove(char* email){//retorna o numero da linha em que o usuário esta para remover
     FILE* fp = fopen("database.csv", "r");
     email = strtok(email, "\n");
-    //printf("entrou: %s\n", curso);
+    
     int linha = -1;
 
     if (!fp)
         printf("Can't open file\n");
 
     else {
- // Here we have taken size of
-        // array 1024 you can modify it
+
         char buffer[1024];
   
         int row = 0;
@@ -412,9 +395,7 @@ int pegalinha_remove(char* email){
             column = 0;
             row++;
   
-            // To avoid printing of column
-            // names in file can be changed
-            // according to need
+           
             if (row == 1)
                 continue;
   
@@ -437,7 +418,7 @@ int pegalinha_remove(char* email){
     return (linha);
 }
 
-int remover(int linha){
+int remover(int linha){//função para remover um usuario do database
     FILE* fp = fopen("database.csv", "r");
      FILE *input = fopen("database.csv", "r"); //Arquivo de entrada.
     FILE *output = fopen("transferindo.txt", "w"); //Arquivo de saída.
@@ -461,8 +442,10 @@ int remover(int linha){
     return 0;
 }
 
-// Function designed for chat between client and server.
-void func(int connfd)
+// Função que consiste na interação cliente e servidor
+//read() funciona na forma de receive
+//write() faz a requisição no cliente e envia a resposta no servidor
+void server_client(int connfd)
 {
     char buff[MAX];
     char buff2[MAX];
@@ -475,32 +458,35 @@ void func(int connfd)
         // read the message from client and copy it in buffer
         read(connfd, buff, sizeof(buff));
 
-        printf("top__ %s\n", buff);
-        if(strncmp("exit",buff,4)==0){
+        
+        if(strncmp("exit",buff,4)==0){//se receber o valor "exit" encerra a conexão do client
             write(connfd, "exit\n", 5);
-            printf("Server Exit...\n");
+            printf("Client Exit...\n");
+            printf("server: waiting for connections...\n");
             break;
         }
-        if(strncmp("1",buff,1)==0){
+        if(strncmp("1",buff,1)==0){//se o 1º valor do buff for 1, inicia o processo para criar um usuário
+            printf("novo usuario\n");
             char nome[100];
             memcpy(nome, &buff[2], sizeof(buff)-2);
             novo_user(nome);
+            strcpy(buff,"Usuário Cadastrado\n");
         }
-        if(strncmp("2",buff,1)==0){
+        if(strncmp("2",buff,1)==0){//se o 1º valor do buff for 2, lista todos os usuarios
             printf("listar por curso\n");
             char curso[102];
             memcpy(curso, &buff[2], sizeof(buff)-2);
             strcpy(buff,(determinado_curso(curso, buff2)));
             printf("no buff tem: %s", buff);
         }
-        if(strncmp("3",buff,1)==0){
+        if(strncmp("3",buff,1)==0){//se o 1º valor do buff for 3, procura usuarios com determinada habilidade
             printf("determinada habilidade\n");
             char habilidade[102];
             memcpy(habilidade, &buff[2], sizeof(buff)-2);
             strcpy(buff,(determinada_habilidade(habilidade, buff2)));
             printf("no buff tem: %s", buff);
         }
-        if(strncmp("4",buff,1)==0){
+        if(strncmp("4",buff,1)==0){//se o 1º valor do buff for 4, procura usuarios formados em determinado ano
             printf("formada no ano x\n");
             char ano[102];
             memcpy(ano, &buff[2], sizeof(buff)-2);
@@ -508,46 +494,40 @@ void func(int connfd)
             printf("no buff tem: %s", buff);
 
         }
-        if(strncmp("5",buff,1)==0){
+        if(strncmp("5",buff,1)==0){//se o 1º valor do buff for 5, lista todos os ususuarios do banco de dados
             printf("listar todos\n");
             strcpy(buff,listar_todos(buff2));
-            printf("agora é o buff:\n%s\n", buff);
         }
-        if(strncmp("6",buff,1)==0){
+        if(strncmp("6",buff,1)==0){//se o 1º valor do buff for 6, busca um usuario por email
             printf("por email\n");
             char email[102];
             memcpy(email, &buff[2], sizeof(buff)-2);
             strcpy(buff,(consultar_email(email, buff2)));
-            printf("agora é o buff:\n%s\n", buff);
         }
-        if(strncmp("7",buff,1)==0){
+        if(strncmp("7",buff,1)==0){//se o 1º valor do buff for remove um usuario
             printf("remover\n");
             char email_r[102];
             memcpy(email_r, &buff[2], sizeof(buff)-2);
             int linha = pegalinha_remove(email_r);
-            //printf("linha: %i\n", linha);
-            remover(linha);
+            if (linha!=-1){
+                remover(linha);
+                strcpy(buff,"Usuário ");
+                strcat(buff,email_r);
+                strcat(buff," removido.");
+            }
+            else{
+                strcpy(buff,"Usuário inexistente.");
+            }
+            
         }
-        // print buffer which contains the client contents
-        printf("From client: %s\t To client : ", buff);
-        //bzero(buff, MAX);
+       
         n = 0;
-        // copy server message in the buffer
-        //while ((buff[n++] = getchar()) != '\n')
-        //    ;
    
         // and send that buffer to client
         write(connfd, buff, sizeof(buff));
         bzero(buff, MAX);
-        //buff[0] = '\0';
-        printf("OQ TEM NO BUFF %s e %d", buff, connfd);
-   
-        // if msg contains "Exit" then server exit and chat ended.
+       
         
-        if (strncmp("exit", buff, 4) == 0) {
-            printf("Server Exit...\n");
-            break;
-        }
     }
 }
 
@@ -654,7 +634,7 @@ int main(void)
 		printf("server: got connection from %s\n", s);
 
 		if (!fork()) { // this is the child process
-			func(new_fd);
+			server_client(new_fd);
 			close(sockfd); // child doesn't need the listener
 			close(new_fd);
 			exit(0);
