@@ -4,6 +4,8 @@
         "inet.h": "c",
         "string.h": "c",
         "stdio.h": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "unistd.h": "c",
+        "stdlib.h": "c"
     }
 }

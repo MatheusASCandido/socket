@@ -6,7 +6,7 @@
 #include <strings.h> // bzero()
 #include <sys/socket.h>
 #include <unistd.h> // read(), write(), close()
-#define MAX 80
+#define MAX 4000
 #define PORT 8080
 #define SA struct sockaddr
 void func(int sockfd)
@@ -31,26 +31,26 @@ void func(int sockfd)
                 scanf("%s",variavel);
                 strcat(buff,variavel);
                 strcat(buff,",");
-                printf(" %s \n", buff);
+                //printf(" %s \n", buff);
 
                 printf("Digite o Nome do usuário: ");
                 scanf("%s",variavel);
                 strcat(buff,variavel);
                 strcat(buff,",");
-                printf(" %s \n", buff);
+                //printf(" %s \n", buff);
 
 
                 printf("Digite o Sobrenome do usuário: ");
                 scanf("%s",variavel);
                 strcat(buff,variavel);
                 strcat(buff,",");
-                printf(" %s \n", buff);
+                //printf(" %s \n", buff);
 
                 printf("Digite a Residência do usuário: ");
                 scanf("%s",variavel);
                 strcat(buff,variavel);
                 strcat(buff,",");
-                printf(" %s \n", buff);
+                //printf(" %s \n", buff);
 
                 printf("Digite a Formação Acadêmica do usuário: ");
                 char aux[100];
@@ -59,20 +59,20 @@ void func(int sockfd)
                 str[strcspn(str, "\n")] = 0;
                 strcat(buff,str);
                 strcat(buff,",");
-                printf(" %s \n", buff);
+                //printf(" %s \n", buff);
 
                 printf("Digite o Ano de Formação do usuário: ");
                 scanf("%s",variavel);
                 strcat(buff,variavel);
                 strcat(buff,",");
-                printf(" %s \n", buff);
+                //printf(" %s \n", buff);
 
                 printf("Digite as Habilidades do usuário: ");
                 //scanf("%[%s^\n]",&variavel);
                 fgets(str, 100, stdin);
                 fgets(str, 100, stdin);
                 strcat(buff,str);
-                printf(" %s \n", buff);
+                //printf(" %s \n", buff);
                 //printf("%s", str);
 
                 //pega as infos necessarias e vai usando o strcat pra add no buff e sempre separa com ":" cada info

@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h> // read(), write(), close()
-#define MAX 80
+#define MAX 4000
 #define PORT 8080
 #define SA struct sockaddr
 
@@ -24,7 +24,7 @@ void novo_user(char* Nome){
     }
 }
 
-void determinado_curso(char* curso){
+char *determinado_curso(char* curso, char* aux){
     FILE* fp = fopen("database.csv", "r");
     curso = strtok(curso, "\n");
     //printf("entrou: %s\n", curso);
@@ -69,6 +69,11 @@ void determinado_curso(char* curso){
                 if (column == 4) {
                     if(strcmp(value, curso)==0){
                         printf("Email: %s; Nome: %s\n", email, nome);
+                        strcat(aux,"Email: ");
+                        strcat(aux,email);
+                        strcat(aux,"; Nome: ");
+                        strcat(aux,nome);
+                        strcat(aux,"\n");
                     }
                 }
   
@@ -78,9 +83,10 @@ void determinado_curso(char* curso){
         }
         fclose(fp);
     }
+    return (aux);
 }
 
-void determinada_habilidade(char* habilidade){
+char *determinada_habilidade(char* habilidade, char* aux){
     FILE* fp = fopen("database.csv", "r");
     habilidade = strtok(habilidade, "\n");
     //printf("entrou: %s\n", curso);
@@ -126,6 +132,11 @@ void determinada_habilidade(char* habilidade){
                     //printf("%s %s\n",value, habilidade);
                     if(strstr(value, habilidade)!=NULL){
                         printf("Email: %s; Nome: %s\n", email, nome);
+                        strcat(aux,"Email: ");
+                        strcat(aux,email);
+                        strcat(aux,"; Nome: ");
+                        strcat(aux,nome);
+                        strcat(aux,"\n");
                     }
                 }
   
@@ -135,9 +146,10 @@ void determinada_habilidade(char* habilidade){
         }
         fclose(fp);
     }
+    return (aux);
 }
 
-void determinado_ano(char* ano){
+char *determinado_ano(char* ano, char* aux){
     FILE* fp = fopen("database.csv", "r");
     ano = strtok(ano, "\n");
     //printf("entrou: %s\n", curso);
@@ -186,6 +198,13 @@ void determinado_ano(char* ano){
                 if (column == 5) {
                     if(strcmp(value, ano)==0){
                         printf("Email: %s; Nome: %s; curso: %s\n", email, nome, curso);
+                        strcat(aux,"Email: ");
+                        strcat(aux,email);
+                        strcat(aux,"; Nome: ");
+                        strcat(aux,nome);
+                        strcat(aux,"; curso: ");
+                        strcat(aux,curso);
+                        strcat(aux,"\n");
                     }
                 }
   
@@ -195,9 +214,10 @@ void determinado_ano(char* ano){
         }
         fclose(fp);
     }
+    return(aux);
 }
 
-void listar_todos(){
+char *listar_todos(char* aux){
     FILE* fp = fopen("database.csv", "r");
 
     if (!fp)
@@ -210,6 +230,7 @@ void listar_todos(){
   
         int row = 0;
         int column = 0;
+        strcat(aux,"\n");
   
         while (fgets(buffer,
                      1024, fp)) {
@@ -228,40 +249,51 @@ void listar_todos(){
             while (value) {
                 if (column == 0) {
                     printf("Email: ");
+                    strcat(aux,"Email: ");
                 }
   
                 if (column == 1) {
                     printf("Nome: ");
+                    strcat(aux,"Nome: ");
                 }
   
                 if (column == 2) {
                     printf("Sobrenome: ");
+                    strcat(aux,"Sobrenome: ");
                 }
 
                 if (column == 3) {
                     printf("Residencia: ");
+                    strcat(aux,"Residencia: ");
                 }
                 if (column == 4) {
                     printf("Formação Acadêmica: ");
+                    strcat(aux,"Formação Acadêmica: ");
                 }
                 if (column == 5) {
                     printf("Ano de Formatura: ");
+                    strcat(aux,"Ano de Formatura: ");
                 }
                 if (column == 6) {
                     printf("Habilidades :");
+                    strcat(aux,"Habilidades: ");
                 }
   
                 printf("%s\n", value);
+                strcat(aux,value);
+                strcat(aux,"\n");
                 value = strtok(NULL, ",");
                 column++;
             }
             printf("\n");
+            strcat(aux,"\n");
         }
         // Close the file
         fclose(fp);
     }
+    return (aux);
 }
-void consultar_email(char* email){
+char *consultar_email(char* email, char* aux){
     FILE* fp = fopen("database.csv", "r");
     email = strtok(email, "\n");
     //printf("entrou: %s\n", curso);
@@ -298,31 +330,46 @@ void consultar_email(char* email){
                     if(strcmp(value, email)==0){
                         correto = 1;
                         printf("Email: ");
+                        strcat(aux,"Email: ");
                     }
                 }
   
                 if (column == 1 && correto==1) {
                     printf("Nome: ");
+                    strcat(aux,"Nome: ");
+
                 }
   
                 if (column == 2 && correto==1) {
                     printf("Sobrenome: ");
+                    strcat(aux,"Sobrenome: ");
+
                 }
 
                 if (column == 3 && correto==1) {
                     printf("Residencia: ");
+                    strcat(aux,"Habilidades: ");
+                    
                 }
                 if (column == 4 && correto==1) {
                     printf("Formação Acadêmica: ");
+                    strcat(aux,"Formação Acadêmica: ");
                 }
                 if (column == 5 && correto==1) {
                     printf("Ano de Formatura: ");
+                    strcat(aux,"Ano de Formatura: ");
+
                 }
                 if (column == 6 && correto==1) {
                     printf("Habilidades :");
+                    strcat(aux,"Habilidades: ");
+
                 }
                 if(correto==1){
                     printf("%s\n", value);
+                    strcat(aux,value);
+                    strcat(aux,"\n");
+
                 }
                 value = strtok(NULL, ",");
                 column++;
@@ -330,6 +377,7 @@ void consultar_email(char* email){
         }
         fclose(fp);
     }
+    return(aux);
 }
 
 int pegalinha_remove(char* email){
@@ -408,10 +456,12 @@ int remover(int linha){
 void func(int connfd)
 {
     char buff[MAX];
+    char buff2[MAX];
     int n;
     // infinite loop for chat
     for (;;) {
         bzero(buff, MAX);
+        bzero(buff2, MAX);
    
         // read the message from client and copy it in buffer
         read(connfd, buff, sizeof(buff));
@@ -431,29 +481,35 @@ void func(int connfd)
             printf("listar por curso\n");
             char curso[102];
             memcpy(curso, &buff[2], sizeof(buff)-2);
-            determinado_curso(curso);
+            strcpy(buff,(determinado_curso(curso, buff2)));
+            printf("no buff tem: %s", buff);
         }
         if(strncmp("3",buff,1)==0){
             printf("determinada habilidade\n");
             char habilidade[102];
             memcpy(habilidade, &buff[2], sizeof(buff)-2);
-            determinada_habilidade(habilidade);
+            strcpy(buff,(determinada_habilidade(habilidade, buff2)));
+            printf("no buff tem: %s", buff);
         }
         if(strncmp("4",buff,1)==0){
             printf("formada no ano x\n");
             char ano[102];
             memcpy(ano, &buff[2], sizeof(buff)-2);
-            determinado_ano(ano);
+            strcpy(buff,(determinado_ano(ano, buff2)));
+            printf("no buff tem: %s", buff);
+
         }
         if(strncmp("5",buff,1)==0){
             printf("listar todos\n");
-            listar_todos();
+            strcpy(buff,listar_todos(buff2));
+            printf("agora é o buff:\n%s\n", buff);
         }
         if(strncmp("6",buff,1)==0){
             printf("por email\n");
             char email[102];
             memcpy(email, &buff[2], sizeof(buff)-2);
-            consultar_email(email);
+            strcpy(buff,(consultar_email(email, buff2)));
+            printf("agora é o buff:\n%s\n", buff);
         }
         if(strncmp("7",buff,1)==0){
             printf("remover\n");
@@ -465,14 +521,17 @@ void func(int connfd)
         }
         // print buffer which contains the client contents
         printf("From client: %s\t To client : ", buff);
-        bzero(buff, MAX);
+        //bzero(buff, MAX);
         n = 0;
         // copy server message in the buffer
-        while ((buff[n++] = getchar()) != '\n')
-            ;
+        //while ((buff[n++] = getchar()) != '\n')
+        //    ;
    
         // and send that buffer to client
         write(connfd, buff, sizeof(buff));
+        bzero(buff, MAX);
+        //buff[0] = '\0';
+        printf("OQ TEM NO BUFF %s e %d", buff, connfd);
    
         // if msg contains "Exit" then server exit and chat ended.
         
